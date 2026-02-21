@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-// 使用 HttpClient 時，宣告為單一實例且可重複使用，避免 Socket 耗盡。
+// 使用 HttpClient 時，宣告為單一實例且可重複使用，避免 Socket 耗盡
 using var sharedClient = new HttpClient();
 
 try
