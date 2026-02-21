@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="DemoPrioritizedChannel/DemoPrioritizedChannel.csproj" />
+  <Project Path="DemoAsyncStreams/DemoAsyncStreams.csproj" />
+  <Project Path="DemoAsyncLinq/DemoAsyncLinq.csproj" />
+  <Project Path="DemoAsyncStreamCancellation/DemoAsyncStreamCancellation.csproj" />
+  <Project Path="DemoAsyncDisposable/DemoAsyncDisposable.csproj" />
+</Solution>

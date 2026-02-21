@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DemoHttpClient\DemoHttpClient.csproj" />
+  <Project Path="DemoFileStream\DemoFileStream.csproj" />
+</Solution>

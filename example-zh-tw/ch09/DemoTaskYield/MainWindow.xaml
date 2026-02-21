@@ -1,0 +1,9 @@
+﻿<Window x:Class="DemoTaskYield.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Demo Task.Yield" Height="200" Width="300">
+    <StackPanel Margin="20">
+        <Button Name="ProcessButton" Content="開始處理" Click="OnProcessButtonClick" Padding="10"/>
+        <TextBlock Name="StatusText" Text="準備就緒" Margin="0,20,0,0"/>
+    </StackPanel>
+</Window>

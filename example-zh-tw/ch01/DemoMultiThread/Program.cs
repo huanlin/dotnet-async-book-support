@@ -1,5 +1,5 @@
 // 模式二：更靈活的多工廚師 (Multithreading)
-// 負責展示多執行緒並行處理的現象
+// 負責展示多執行緒併發處理的現象
 
 using System.Diagnostics;
 

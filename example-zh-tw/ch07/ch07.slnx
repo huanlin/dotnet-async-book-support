@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DemoParallelLoopState\DemoParallelLoopState.csproj" />
+  <Project Path="DemoPlinqAdvanced\DemoPlinqAdvanced.csproj" />
+</Solution>

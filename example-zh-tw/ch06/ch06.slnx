@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DemoMutableStructPitfall\DemoMutableStructPitfall.csproj" />
+  <Project Path="DemoRecordTypes\DemoRecordTypes.csproj" />
+</Solution>

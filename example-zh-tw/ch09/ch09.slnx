@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="DemoTaskCompletionSource/DemoTaskCompletionSource.csproj" />
+  <Project Path="DemoValueTask/DemoValueTask.csproj" />
+  <Project Path="DemoTaskYield/DemoTaskYield.csproj" />
+</Solution>

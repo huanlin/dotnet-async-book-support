@@ -3,10 +3,10 @@
 
 using System.Diagnostics;
 
-Console.WriteLine("披薩店開始營業！模式三：超級廚師搭配智慧烤箱 (非同步編程)");
+Console.WriteLine("披薩店開始營業！模式三：超級廚師搭配智慧烤箱 (非同步程式設計)");
 var sw = Stopwatch.StartNew();
 
-// 啟動三個非同步的披薩製作任務（它們會並行執行非同步邏輯）
+// 啟動三個非同步的披薩製作任務（它們會併發執行非同步邏輯）
 var p1 = MakePizzaAsync(1);
 var p2 = MakePizzaAsync(2);
 var p3 = MakePizzaAsync(3);
@@ -29,7 +29,7 @@ async Task MakePizzaAsync(int id)
     threadId = Environment.CurrentManagedThreadId;
     Console.WriteLine($"[廚師 {threadId}] 將第 {id} 份披薩送入烤箱，設定計時器後即去處理其他事情！");
     
-    // 這裡使用 Task.Delay 來模擬耗時的「I/O 綁定 (I/O-bound)」操作，例如烤箱烘烤
+    // 模擬如網路連線、讀寫檔案這類需要等待外部回應的耗時操作（即 I/O 密集型操作），例如此處的烤箱烘烤
     // ★ 關鍵點：執行緒在這裡被「完全釋放」了，它不會被阻塞
     // 系統可以將該執行緒派去處理其他任務，直到烤箱時間到了再透過系統的排程繼續執行下一行程式
     await Task.Delay(2000); 
