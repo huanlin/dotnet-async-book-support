@@ -13,7 +13,7 @@ try
 }
 catch (OperationCanceledException)
 {
-    Console.WriteLine("工作因為超時而被取消了！");
+    Console.WriteLine("工作因為逾時而被取消了！");
 }
 
 static async Task DoSomeLongRunningWorkAsync(CancellationToken token)

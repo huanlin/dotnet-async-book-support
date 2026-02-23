@@ -1,7 +1,7 @@
 using System.Diagnostics;
 
 // 使用 HttpClient 時，宣告為單一實例且可重複使用，避免 Socket 耗盡
-using var sharedClient = new HttpClient();
+using var httpClient = new HttpClient();
 
 Console.WriteLine("示範 HttpClient 的 ResponseHeadersRead 與串流處理");
 
@@ -41,7 +41,7 @@ async Task DownloadLargeFileAsync(string fileUrl, string destinationPath)
     // 關鍵參數：HttpCompletionOption.ResponseHeadersRead
     // 指示 HttpClient 只要讀到 HTTP Headers 就立刻返回，不要把整個 Body 讀進記憶體
     Console.WriteLine("發送 HTTP 要求，等待 Headers 回傳...");
-    using var response = await sharedClient.GetAsync(fileUrl, HttpCompletionOption.ResponseHeadersRead);
+    using var response = await httpClient.GetAsync(fileUrl, HttpCompletionOption.ResponseHeadersRead);
     
     // 確保 HTTP 狀態碼是 2xx 成功
     response.EnsureSuccessStatusCode();

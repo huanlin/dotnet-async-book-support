@@ -3,4 +3,5 @@
   <Project Path="DemoLock/DemoLock.csproj" />
   <Project Path="DemoLockNet9/DemoLockNet9.csproj" />
   <Project Path="DemoSemaphoreSlim/DemoSemaphoreSlim.csproj" />
+  <Project Path="DemoMutex/DemoMutex.csproj" />
 </Solution>

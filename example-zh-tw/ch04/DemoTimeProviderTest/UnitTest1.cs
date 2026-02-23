@@ -30,8 +30,8 @@ public class MyService
         }
         catch (OperationCanceledException) when (cts.Token.IsCancellationRequested)
         {
-             // 區分是「超時取消」還是「使用者取消」
-             throw new TimeoutException("操作已超時。");
+             // 區分是「逾時取消」還是「使用者取消」
+             throw new TimeoutException("操作已逾時。");
         }
     }
 
@@ -60,7 +60,7 @@ public class UnitTest1
         // Act: 讓時間快轉 30 秒 + 1 tick
         fakeTime.Advance(TimeSpan.FromSeconds(30.1));
 
-        // Assert: 任務應該因為超時而拋出 TimeoutException
+        // Assert: 任務應該因為逾時而拋出 TimeoutException
         await Assert.ThrowsAsync<TimeoutException>(async () => await task);
     }
 }

@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 // 使用 HttpClient 時，宣告為單一實例且可重複使用，避免 Socket 耗盡
-using var sharedClient = new HttpClient();
+using var httpClient = new HttpClient();
 
 Console.WriteLine("示範 Task.WhenAll 同步等待多個工作");
 
@@ -18,9 +18,9 @@ Console.WriteLine($"總耗時: {sw.ElapsedMilliseconds} ms");
 async Task ConcurrentDownloadAsync()
 {
     // 1. 啟動所有工作 (Fire tasks)
-    Task<string> task1 = sharedClient.GetStringAsync("https://example.com/");
-    Task<string> task2 = sharedClient.GetStringAsync("https://example.com/");
-    Task<string> task3 = sharedClient.GetStringAsync("https://example.com/");
+    Task<string> task1 = httpClient.GetStringAsync("https://ippobooks.com/");
+    Task<string> task2 = httpClient.GetStringAsync("https://ippobooks.com/");
+    Task<string> task3 = httpClient.GetStringAsync("https://ippobooks.com/");
 
     // 2. 等待全部完成 (Await all)
     string[] results = await Task.WhenAll(task1, task2, task3);

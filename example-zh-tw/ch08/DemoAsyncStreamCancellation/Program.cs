@@ -17,7 +17,7 @@ try
 }
 catch (OperationCanceledException)
 {
-    Console.WriteLine("資料流處理因為取消或超時而中止。");
+    Console.WriteLine("資料流處理因為取消或逾時而中止。");
 }
 
 // 生產端：接受 CancellationToken 並加上 [EnumeratorCancellation] 屬性

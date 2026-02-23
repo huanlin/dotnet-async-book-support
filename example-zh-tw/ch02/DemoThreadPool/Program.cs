@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 
-Console.WriteLine($"主執行緒 ID: {Thread.CurrentThread.ManagedThreadId}");
+var msg = $"主執行緒 ID: {Thread.CurrentThread.ManagedThreadId}";
+Console.WriteLine(msg);
 
 // 將工作項目排入執行緒集區
 ThreadPool.QueueUserWorkItem(_ => DoWork());

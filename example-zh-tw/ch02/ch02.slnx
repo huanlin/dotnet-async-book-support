@@ -3,4 +3,5 @@
   <Project Path="DemoThreadPool/DemoThreadPool.csproj" />
   <Project Path="DemoTaskRun/DemoTaskRun.csproj" />
   <Project Path="DemoForegroundBackgroundThreads/DemoForegroundBackgroundThreads.csproj" />
+  <Project Path="DemoTaskStatus/DemoTaskStatus.csproj" />
 </Solution>

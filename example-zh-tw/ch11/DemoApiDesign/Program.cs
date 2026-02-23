@@ -44,7 +44,7 @@ Console.WriteLine("展示完畢。");
 /// </summary>
 public class GoodApiDesignService
 {
-    private static readonly HttpClient s_httpClient = new HttpClient();
+    private static readonly HttpClient httpClient = new HttpClient();
     private readonly Dictionary<int, string> _cache = new();
 
     // 1. 使用 ValueTask 結合快取避免 Task 的 GC 配置壓力
@@ -83,7 +83,7 @@ public class GoodApiDesignService
 
         async Task<string> CoreDownloadAsync()
         {
-            return await s_httpClient.GetStringAsync(url, cancellationToken).ConfigureAwait(false);
+            return await httpClient.GetStringAsync(url, cancellationToken).ConfigureAwait(false);
         }
     }
 }
