@@ -25,7 +25,7 @@ Task task2 = Task.Run(() =>
         // 使用 EnterScope 的寫法
         using (_lock.EnterScope())
         {
-            // 進入臨界區段
+            // 進入關鍵區段
             counter++;
         } // 離開區塊時自動釋放鎖
     }
