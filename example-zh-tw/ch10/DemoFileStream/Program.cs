@@ -41,7 +41,7 @@ void CreateDummyFile(string path, int sizeInBytes)
 
 async Task CopyFileWithAsyncStream(string source, string dest)
 {
-    // ★ 關鍵點一：讀取時開啟 useAsync: true
+    // 關鍵點一：讀取時明確指定 useAsync: true
     using var sourceStream = new FileStream(
         source, 
         FileMode.Open, 
@@ -50,7 +50,7 @@ async Task CopyFileWithAsyncStream(string source, string dest)
         bufferSize: 81920, 
         useAsync: true);
 
-    // ★ 關鍵點二：寫入時開啟 useAsync: true
+    // 關鍵點二：寫入時明確指定 useAsync: true
     using var destinationStream = new FileStream(
         dest, 
         FileMode.Create, 
@@ -59,11 +59,11 @@ async Task CopyFileWithAsyncStream(string source, string dest)
         bufferSize: 81920, 
         useAsync: true);
 
-    // ★ 關鍵點三：CopyToAsync 提供的背壓 (Backpressure) 控制
-    // 它不會一次把 500MB 全讀進 RAM，而是配置一塊 buffer (例如 81920 bytes)。
+    // 關鍵點三：CopyToAsync 提供的背壓 (Backpressure) 控制
+    // 它不會一次把 500MB 全讀進 RAM，而是使用固定大小的 buffer (例如 81920 bytes)。
     // 讀滿 buffer -> 暫停讀取 -> 觸發寫入硬碟 -> 等待寫入完成 -> 繼續讀取網路/來源。
-    // 這讓程式的記憶體使用量維持完美的一條水平線 (Flat line)，即使來源與目標的速度差異極大也能安然度過。
+    // 這讓程式的記憶體使用量大致維持在固定緩衝區的量級，不會隨檔案大小線性成長。
     
-    // 我們可以傳入自己定義的 buffer size ให้ CopyToAsync
+    // 我們也可以傳入自己定義的 buffer size 給 CopyToAsync
     await sourceStream.CopyToAsync(destinationStream, bufferSize: 81920);
 }

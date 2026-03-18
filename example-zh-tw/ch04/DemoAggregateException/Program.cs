@@ -22,7 +22,7 @@ catch (AggregateException ex)
     Console.WriteLine($"捕捉到 AggregateException，真正的錯誤是：{realException.GetType().Name}");
 }
 
-Console.WriteLine("\n示範 Task.WhenAll 多重例外使用 await (只拋出第一個)");
+Console.WriteLine("\n示範 Task.WhenAll 多重例外使用 await (只傳播其中一個)");
 
 try
 {
@@ -32,7 +32,7 @@ try
 }
 catch (Exception ex)
 {
-    // 這裡只會捕捉到 "Error 1" (或 "Error 2"，取決於順序)
+    // 這裡只會捕捉到其中一個錯誤
     Console.WriteLine($"捕捉到：{ex.Message}");
 }
 
@@ -46,7 +46,7 @@ try
 catch
 {
     // 檢查 allTasks.Exception 來取得所有錯誤
-    foreach (var innerEx in allTasks.Exception.InnerExceptions)
+    foreach (var innerEx in allTasks.Exception!.InnerExceptions)
     {
         Console.WriteLine($"錯誤：{innerEx.Message}");
     }

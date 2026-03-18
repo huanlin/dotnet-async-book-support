@@ -1,14 +1,16 @@
 using System.Diagnostics;
 
-Console.WriteLine("示範第 12 章：執行緒集區飢餓 (Thread Pool Starvation)");
+Console.WriteLine("示範第 9 章：執行緒集區飢餓 (Thread Pool Starvation)");
 Console.WriteLine("注意：此範例將會刻意製造飢餓現象，導致程式耗時數十秒才能完成。");
 
-// 為了讓效果明顯，我們先把 ThreadPool 的最小執行緒數限制在常見機器的核心數 (例如: 8)
-ThreadPool.SetMinThreads(8, 8);
+// 為了讓效果更明顯，刻意把 ThreadPool 的最小執行緒數降到很低，
+// 讓一開始可用的人力遠低於瞬間湧入的工作量，藉此放大飢餓現象。
+ThreadPool.SetMinThreads(1, 1);
 
-// 模擬瞬間湧入 100 個併發的 HTTP Request
-int requestCount = 100;
+// 模擬瞬間湧入 500 個併發的 HTTP Request
+int requestCount = 500;
 var tasks = new Task[requestCount];
+bool useProperAsyncVersion = false;
 
 var sw = Stopwatch.StartNew();
 
@@ -16,12 +18,12 @@ for (int i = 0; i < requestCount; i++)
 {
     int requestId = i;
     // 每個 Request 都是一個跑在 ThreadPool 上的工作
-    
-    // 底下這行是呼叫 sync-over-async 來展示錯誤寫法造成的延遲現象
-    tasks[i] = Task.Run(() => ProcessRequestSyncOverAsync(requestId));
 
-    // 底下這行是健康的非同步 API。把上一行變成註解，並將底下這行去掉註解，以觀察效能差異。
-    // tasks[i] = Task.Run(() => ProcessRequestProperlyAsync(requestId));
+    // 預設使用 sync-over-async 來展示錯誤寫法造成的延遲現象。
+    // 若要改看健康的非同步版本，請將 useProperAsyncVersion 改成 true。
+    tasks[i] = useProperAsyncVersion
+        ? Task.Run(() => ProcessRequestProperlyAsync(requestId))
+        : Task.Run(() => ProcessRequestSyncOverAsync(requestId));
 }
 
 await Task.WhenAll(tasks);
@@ -33,10 +35,10 @@ Console.WriteLine($"總耗時: {sw.ElapsedMilliseconds} ms");
 // --- 錯誤示範：導致飢餓的 Sync-over-Async ---
 void ProcessRequestSyncOverAsync(int id)
 {
-    // [致命錯誤] 在背景執行緒中「同步等待」一個非同步方法
-    // 這會把這條珍貴的 ThreadPool 執行緒卡住 (block)長達 1 秒！
-    // 由於我們只預先開了 8 條執行緒，瞬間就會全部被卡死。
-    // 剩下的 92 個請求，必須等待 ThreadPool 以每秒約 1~2 條的龜速緩慢「注入 (inject)」新執行緒。
+    // [致命錯誤] 在背景執行緒中「同步等待」一個非同步方法。
+    // 這會把珍貴的 ThreadPool 執行緒卡住約 1 秒，無法去處理其他請求。
+    // 在這個範例裡，我們同時丟出 500 個工作，卻把最小執行緒數壓到 1，
+    // 因此 ThreadPool 只能一邊救火、一邊慢慢補執行緒，整體延遲就會被大幅拉長。
     
     LogThreadCount(id, "開始");
     
@@ -48,9 +50,9 @@ void ProcessRequestSyncOverAsync(int id)
 // --- 正確示範：一路非同步到底 ---
 async Task ProcessRequestProperlyAsync(int id)
 {
-    // [良好實踐] await 會立刻釋放 (Yield) 執行緒回 ThreadPool 
-    // 這 8 條執行緒可以瞬間接手所有的 100 個請求並發送給資料庫。
-    // 即便瞬間湧入 100 個連線，系統也只會用到少量的執行緒，1 秒出頭就能全數處理完畢！
+    // [良好實踐] await 會在等待 I/O 期間立刻釋放執行緒回 ThreadPool。
+    // 即使瞬間湧入 500 個請求，執行緒也不必一直被卡在等待狀態，
+    // 因此系統通常只需要少量執行緒，就能把大量 I/O 工作順利推進。
     
     LogThreadCount(id, "開始");
     

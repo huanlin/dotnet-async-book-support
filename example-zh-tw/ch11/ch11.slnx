@@ -1,3 +1,6 @@
 <Solution>
+  <Project Path="DemoAsyncOverSync\DemoAsyncOverSync.csproj" />
   <Project Path="DemoApiDesign\DemoApiDesign.csproj" />
+  <Project Path="DemoSyncOverAsync\DemoSyncOverAsync.csproj" />
+  <Project Path="DemoTimeoutCancellation\DemoTimeoutCancellation.csproj" />
 </Solution>

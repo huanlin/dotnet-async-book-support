@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="DemoBasicChannel/DemoBasicChannel.csproj" />
   <Project Path="DemoPrioritizedChannel/DemoPrioritizedChannel.csproj" />
   <Project Path="DemoAsyncStreams/DemoAsyncStreams.csproj" />
   <Project Path="DemoAsyncLinq/DemoAsyncLinq.csproj" />

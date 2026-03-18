@@ -15,7 +15,7 @@ List<MutablePoint> list = new List<MutablePoint>
 };
 
 // 重點來了：list[0] 會回傳該結構的一個「暫時副本 (Copy)」
-// 呼叫 Move(5, 5) 實際上只修改了那個暫時副本，立刻就被記憶體回收了
+// 呼叫 Move(5, 5) 實際上只修改了那個副本，並不會寫回 List 內部的元素
 list[0].Move(5, 5);  
 
 Console.WriteLine($"List 中的點：X={list[0].X}, Y={list[0].Y}"); 

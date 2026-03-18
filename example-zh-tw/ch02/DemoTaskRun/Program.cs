@@ -10,7 +10,7 @@ Task task = Task.Run(() =>
 {
     Console.WriteLine($"背景執行緒 ID: {Thread.CurrentThread.ManagedThreadId}");
     Console.WriteLine("背景工作正在進行中...");
-    Thread.Sleep(2000); // 模擬耗時 2 秒的工作
+    Thread.Sleep(2000); // 這裡只用來簡化模擬一段耗時的同步工作
     Console.WriteLine("背景工作完成。");
 });
 

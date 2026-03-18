@@ -19,9 +19,6 @@ Console.WriteLine();
 // 2. 平行處理
 ProcessFilesParallel(files);
 
-Console.WriteLine("\n按下 Enter 鍵結束...");
-Console.ReadLine();
-
 static void ProcessFilesSequentially(IEnumerable<string> files)
 {
     Console.WriteLine("開始循序處理檔案...");
@@ -48,6 +45,14 @@ static void ProcessFilesParallel(IEnumerable<string> files)
 
 static void ProcessSingleFile(string file)
 {
-    // 模擬一個耗時 1 秒的 CPU 密集型工作
-    Thread.Sleep(1000);
+    // 模擬 CPU 密集型工作：重複執行大量數值運算
+    double score = 0;
+    int iterations = 15_000_000 + file.Length * 100_000;
+
+    for (int i = 1; i <= iterations; i++)
+    {
+        score += Math.Sqrt(i + file.Length);
+    }
+
+    GC.KeepAlive(score);
 }

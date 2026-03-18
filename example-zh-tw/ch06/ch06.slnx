@@ -2,4 +2,6 @@
   <Project Path="DemoMutableStructPitfall\DemoMutableStructPitfall.csproj" />
   <Project Path="DemoRecordTypes\DemoRecordTypes.csproj" />
   <Project Path="DemoConcurrentDictionary\DemoConcurrentDictionary.csproj" />
+  <Project Path="DemoImmutableAndFrozenCollections\DemoImmutableAndFrozenCollections.csproj" />
+  <Project Path="DemoImmutableArrayDefaultValueTrap\DemoImmutableArrayDefaultValueTrap.csproj" />
 </Solution>

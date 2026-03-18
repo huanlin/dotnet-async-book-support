@@ -13,9 +13,9 @@ Console.WriteLine("Main 函式 (前景) 即將結束，但程式會等待前景�
 
 
 // 範例二：使用 Task.Run (背景執行緒)
-Task.Run(() =>
+_ = Task.Run(() =>
 {
-    Thread.Sleep(3000);
+    Thread.Sleep(5000);
     // 這行可能永遠不會被執行
     Console.WriteLine("背景執行緒完成。");
 });

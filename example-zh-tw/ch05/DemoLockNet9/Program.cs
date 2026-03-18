@@ -3,14 +3,14 @@ using System.Threading;
 using System.Threading.Tasks;
 
 int counter = 0;
-// 1. 使用專用的 Lock 型別，而不是 object
+// 使用專用的 Lock 型別，而不是 object
 Lock _lock = new Lock();
 
 Task task1 = Task.Run(() =>
 {
     for (int i = 0; i < 1_000_000; i++)
     {
-        // 2. 這語法看起來跟舊的一樣，但編譯器會針對 Lock 型別產生更高效的程式碼！
+        // 語法看起來跟舊的一樣，但編譯器會針對 Lock 型別產生更高效的程式碼！
         lock (_lock)
         {
             counter++;

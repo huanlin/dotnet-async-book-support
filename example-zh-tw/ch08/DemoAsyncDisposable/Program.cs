@@ -15,7 +15,7 @@ static async Task ProcessDataAsync()
 }
 
 // 一個實作了 IAsyncDisposable 的類別
-public class MyAsyncResource : IAsyncDisposable
+public sealed class MyAsyncResource : IAsyncDisposable
 {
     private bool _isDisposed = false;
 

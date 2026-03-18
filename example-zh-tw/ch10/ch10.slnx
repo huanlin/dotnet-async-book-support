@@ -1,4 +1,7 @@
 <Solution>
+  <Project Path="DemoAsyncMvvmWpf\DemoAsyncMvvmWpf.csproj" />
+  <Project Path="DemoControlInvokeAsync\DemoControlInvokeAsync.csproj" />
   <Project Path="DemoHttpClient\DemoHttpClient.csproj" />
   <Project Path="DemoFileStream\DemoFileStream.csproj" />
+  <Project Path="DemoShowDialogAsync\DemoShowDialogAsync.csproj" />
 </Solution>

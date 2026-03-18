@@ -27,10 +27,11 @@ public record WorkItem(string Name, int Priority);
 // 實作比較器：Priority 越高的越前面 (降冪排序)
 public class PriorityComparer : IComparer<WorkItem>
 {
-    public int Compare(WorkItem x, WorkItem y)
+    public int Compare(WorkItem? x, WorkItem? y)
     {
-        // ret > 0: x > y (x 排前面)
-        // ret < 0: x < y (y 排前面)
-        return y.Priority.CompareTo(x.Priority);
+        if (ReferenceEquals(x, y)) return 0;
+        if (x is null) return 1;
+        if (y is null) return -1;
+        return y.Priority.CompareTo(x.Priority); // Priority 越高越先被讀取
     }
 }

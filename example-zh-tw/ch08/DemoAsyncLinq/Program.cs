@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// 需要 NuGet 套件: System.Linq.Async
+// .NET 10 可直接使用 IAsyncEnumerable<T> 的 LINQ 擴充方法
 await foreach (var item in FetchPaginatedDataAsync()
                  .Where(chunk => chunk.Contains("3") || chunk.Contains("5"))
                  .Select(chunk => chunk.ToUpper()))

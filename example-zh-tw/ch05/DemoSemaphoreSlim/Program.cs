@@ -19,7 +19,7 @@ Console.WriteLine("所有任務執行完畢。");
 async Task PerformExpensiveOperationAsync(int id)
 {
     Console.WriteLine($"任務 {id} 正在等待進入...");
-    // 非同步地等待信號量
+    // 非同步地等待號誌（手環）
     await _semaphore.WaitAsync();
     try
     {
@@ -28,7 +28,7 @@ async Task PerformExpensiveOperationAsync(int id)
     }
     finally
     {
-        // 確保一定會釋放信號量
+        // 確保一定會釋放號誌（手環）
         _semaphore.Release();
         Console.WriteLine($"<-- 任務 {id} 已離開。");
     }

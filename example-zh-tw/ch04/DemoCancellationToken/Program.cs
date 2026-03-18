@@ -8,7 +8,7 @@ var cts = new CancellationTokenSource();
 // 2. 從 CTS 取得 CancellationToken
 var token = cts.Token;
 
-// 3. 將 token 傳遞給你的非同步方法 (不要 await 它，讓它在背景跑)
+// 3. 將 token 傳遞給你的非同步方法 (先不要立刻 await，讓它在背景跑)
 Task workTask = DoSomeLongRunningWorkAsync(token);
 
 // 模擬使用者操作了一段時間後決定取消
@@ -25,6 +25,7 @@ try
 catch (OperationCanceledException) 
 {
     // 這是預期的
+    Console.WriteLine("呼叫端捕獲 OperationCanceledException。");
 }
 
 static async Task DoSomeLongRunningWorkAsync(CancellationToken token)

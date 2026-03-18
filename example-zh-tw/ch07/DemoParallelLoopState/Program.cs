@@ -1,6 +1,4 @@
-using System.Diagnostics;
-
-Console.WriteLine("示範第 7 章：平行處理的進階控制 (ParallelLoopState 與 ParallelOptions)");
+Console.WriteLine("示範第 7 章：使用 ParallelLoopState 控制平行迴圈");
 
 Console.WriteLine("\n--- 展示一：使用 Stop() 立即中止所有迭代 ---");
 RunParallelLoopWithStop();
@@ -8,12 +6,8 @@ RunParallelLoopWithStop();
 Console.WriteLine("\n--- 展示二：使用 Break() 確保當前索引之前的迭代完成 ---");
 RunParallelLoopWithBreak();
 
-// ======= 方法定義 =======
-
 void RunParallelLoopWithStop()
 {
-    var sw = Stopwatch.StartNew();
-    
     // Stop() 的特性：一旦呼叫，迴圈會盡快拒絕任何「尚未開始」的新迭代
     // 即使該迭代的索引是排在呼叫 Stop() 的索引「之前」，也有可能被放棄執行。
     ParallelLoopResult result = Parallel.For(1, 15, (i, state) =>
@@ -29,7 +23,6 @@ void RunParallelLoopWithStop()
         Console.WriteLine($"[執行緒 {Environment.CurrentManagedThreadId}] 已完成處理第 {i} 筆");
     });
 
-    sw.Stop();
     Console.WriteLine($"迴圈已完成? {result.IsCompleted}");
     if (!result.IsCompleted)
     {
@@ -39,8 +32,6 @@ void RunParallelLoopWithStop()
 
 void RunParallelLoopWithBreak()
 {
-    var sw = Stopwatch.StartNew();
-    
     // Break() 的特性：一旦呼叫，它會承諾讓所有「早於」當前索引的迭代完整跑完
     // (例如在 i=5 呼叫 Break，它保證 i=1,2,3,4 一定會全部做完)
     ParallelLoopResult result = Parallel.For(1, 15, (i, state) =>
@@ -56,7 +47,6 @@ void RunParallelLoopWithBreak()
         Console.WriteLine($"[執行緒 {Environment.CurrentManagedThreadId}] 已完成處理第 {i} 筆");
     });
 
-    sw.Stop();
     Console.WriteLine($"迴圈已完成? {result.IsCompleted}");
     if (!result.IsCompleted)
     {

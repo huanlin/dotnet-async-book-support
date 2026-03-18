@@ -5,9 +5,8 @@ using var httpClient = new HttpClient();
 
 Console.WriteLine("示範 HttpClient 的 ResponseHeadersRead 與串流處理");
 
-// 目標：下載一個大型檔案（例如 Ubuntu ISO，這裡使用公開可用的測速檔案取代或模擬）
-// 為了避免真的下載太久，我們使用一個 100MB 的測試檔案
-string url = "https://speed.hetzner.de/100MB.bin";
+// 目標：下載一個大型檔案（這裡使用公開可用的 100 MB 測試檔案）
+string url = "https://proof.ovh.net/files/100Mb.dat";
 string tempFilePath = Path.GetTempFileName();
 
 Console.WriteLine($"準備下載檔案: {url}");
@@ -48,15 +47,18 @@ async Task DownloadLargeFileAsync(string fileUrl, string destinationPath)
 
     // 取得即將進入的資料流總長度 (如果伺服器有提供 Content-Length)
     long? totalBytes = response.Content.Headers.ContentLength;
-    Console.WriteLine($"伺服器回傳的檔案大小 (Content-Length): {totalBytes / 1024 / 1024} MB");
+    string contentLengthText = totalBytes.HasValue
+        ? $"{totalBytes.Value / 1024 / 1024} MB"
+        : "未提供";
+    Console.WriteLine($"伺服器回傳的檔案大小 (Content-Length): {contentLengthText}");
     
-    Console.WriteLine("開始從網路流讀取資料，並同步寫入磁碟 (背壓控制與串流化處理)...");
+    Console.WriteLine("開始從網路流讀取資料，並持續寫入磁碟 (背壓控制與串流化處理)...");
     
     // 從 Response 中取得即時的非同步資料流
     using var networkStream = await response.Content.ReadAsStreamAsync();
     
     // 建立本地端的檔案流
-    // ★ 關鍵點：必須設定 useAsync: true，才能讓作業系統底層真的使用非同步 I/O，不阻塞執行緒
+    // 關鍵點：明確設定 useAsync: true，要求底層盡量採用非同步 I/O 路徑
     using var fileStream = new FileStream(
         destinationPath, 
         FileMode.Create, 

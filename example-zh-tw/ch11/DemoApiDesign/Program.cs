@@ -91,7 +91,7 @@ public class GoodApiDesignService
 /// <summary>
 /// 示範 IAsyncDisposable 的實作
 /// </summary>
-public class NetworkStreamWrapper : IAsyncDisposable
+public sealed class NetworkStreamWrapper : IAsyncDisposable
 {
     public NetworkStreamWrapper()
     {

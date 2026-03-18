@@ -9,7 +9,7 @@ using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3.5));
 try
 {
     // 消費端：使用 .WithCancellation()
-    await foreach (var dataChunk in FetchPaginatedDataAsync(cts.Token)
+    await foreach (var dataChunk in FetchPaginatedDataAsync()
                                      .WithCancellation(cts.Token))
     {
         Console.WriteLine($"收到並處理資料: {dataChunk}");
