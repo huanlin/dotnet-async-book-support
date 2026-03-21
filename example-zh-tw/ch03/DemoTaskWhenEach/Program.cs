@@ -16,7 +16,7 @@ async Task ProcessTasksAsTheyCompleteAsync()
     }
 
     // 這裡的 t 代表一個「已經完成」的工作
-    // 迴圈會依照「完成的順序」迭代，而不是原本列表的順序！
+    // 迴圈會依照「完成的順序」迭代，而不是原本串列的順序！
     await foreach (Task<int> t in Task.WhenEach(tasks))
     {
         try

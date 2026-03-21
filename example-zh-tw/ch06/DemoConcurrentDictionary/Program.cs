@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Threading;
 using System.Threading.Tasks;
 
 Console.WriteLine("示範 ConcurrentDictionary 的 GetOrAdd 原子性操作");
@@ -19,8 +20,9 @@ Console.WriteLine($"快取中的值: {cache["user:1"]}");
 static string LoadDataFromDb(string key)
 {
     Console.WriteLine($"[傳統寫法] 正在從資料庫為 {key} 載入資料...");
-    // 模擬稍微耗時的讀取
-    Task.Delay(100).Wait();
+    // 這裡刻意模擬「同步」工作，所以用 Thread.Sleep；
+    // 若寫成 Task.Delay(...).Wait() 反而會變成不建議的 sync-over-async。
+    Thread.Sleep(100);
     return "Some Data";
 }
 
@@ -47,6 +49,7 @@ string GetCachedData(string key)
 static string LoadDataFromDbSafely(string key)
 {
     Console.WriteLine($"[Lazy 安全寫法] 正在從資料庫為 {key} 載入資料...");
-    Task.Delay(100).Wait();
+    // 同上：這裡不是 async 流程，若真要模擬非同步延遲，應改寫成 await Task.Delay(...)。
+    Thread.Sleep(100);
     return "Safe Data";
 }
