@@ -25,5 +25,5 @@ Console.WriteLine($"新版本: {olderAlice}");
 // 1. Name 和 Age 兩個 init-only 屬性
 // 2. 覆寫 Equals 和 GetHashCode 實現「值相等性」
 // 3. 提供漂亮的 ToString() 實作
-// 4. 支援 with 運算式所需的 Clone() 方法與解構 (Deconstruct) 語法
+// 4. 支援 with 運算式所需的複製語意與解構 (Deconstruct) 語法
 public record Person(string Name, int Age);

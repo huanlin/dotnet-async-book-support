@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 
-Console.WriteLine("示範 ConcurrentDictionary 的 GetOrAdd 原子性操作");
+Console.WriteLine("示範 ConcurrentDictionary 的 GetOrAdd 與 valueFactory 行為");
 
 var cache = new ConcurrentDictionary<string, string>();
 
@@ -27,7 +27,7 @@ static string LoadDataFromDb(string key)
 }
 
 Console.WriteLine("\n-------------------------------------------------------------");
-Console.WriteLine("完美解法：搭配 Lazy<T> 保證只執行一次");
+Console.WriteLine("常見解法：搭配 Lazy<T> 延後真正的初始化");
 
 var lazyCache = new ConcurrentDictionary<string, Lazy<string>>();
 
@@ -40,8 +40,12 @@ Console.WriteLine($"快取中的值: {lazyCache["user:2"].Value}");
 
 string GetCachedData(string key)
 {
+    // 工廠函式只建立 Lazy<T> 包裝物件。
+    // 真正的初始化會延後到存活下來的 Lazy<T>.Value 被讀取時才發生。
     var lazyResult = lazyCache.GetOrAdd(key,
-        k => new Lazy<string>(() => LoadDataFromDbSafely(k)));
+        k => new Lazy<string>(
+            () => LoadDataFromDbSafely(k),
+            LazyThreadSafetyMode.ExecutionAndPublication));
 
     return lazyResult.Value;
 }

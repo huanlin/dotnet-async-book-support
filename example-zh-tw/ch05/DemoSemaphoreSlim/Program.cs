@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-// 限制最多只能有 3 條執行緒同時執行某個昂貴的操作
+// 限制最多只能有 3 個操作同時進入這段非同步工作
 SemaphoreSlim _semaphore = new SemaphoreSlim(3);
 
 var tasks = new List<Task>();

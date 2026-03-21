@@ -53,7 +53,7 @@ public struct Point
     public readonly void PrintInfo()
     {
         Console.WriteLine($"Point: ({X}, {Y})");
-        LogState();  // 這裡會觸發 defensive copy
+        LogState();  // 刻意保留非 readonly，以便觀察 CS8656 警告與 defensive copy
     }
 
     private void LogState()
