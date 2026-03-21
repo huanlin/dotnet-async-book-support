@@ -1,6 +1,6 @@
 Console.WriteLine("示範第 7 章：使用 ParallelLoopState 控制平行迴圈");
 
-Console.WriteLine("\n--- 展示一：使用 Stop() 立即中止所有迭代 ---");
+Console.WriteLine("\n--- 展示一：使用 Stop() 要求盡快停止尚未開始的迭代 ---");
 RunParallelLoopWithStop();
 
 Console.WriteLine("\n--- 展示二：使用 Break() 確保當前索引之前的迭代完成 ---");
@@ -14,7 +14,7 @@ void RunParallelLoopWithStop()
     {
         if (i == 5)
         {
-            Console.WriteLine($"[執行緒 {Environment.CurrentManagedThreadId}] 處理到第 {i} 筆，呼叫 state.Stop() 棄船！");
+            Console.WriteLine($"[執行緒 {Environment.CurrentManagedThreadId}] 處理到第 {i} 筆，呼叫 state.Stop()，要求盡快停止尚未開始的迭代！");
             state.Stop();
         }
 

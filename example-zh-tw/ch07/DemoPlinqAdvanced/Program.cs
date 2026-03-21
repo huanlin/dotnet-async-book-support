@@ -36,11 +36,11 @@ void RunPlinqWithMergeOption(List<int> source, ParallelMergeOptions option)
 
     // 開始逐一處理這個查詢的結果
     // 因為我們用了 foreach 迴圈，PLINQ 引擎必須負責將各個不同執行緒的結果
-    // 重新「合併 (Merge)」回這個主執行緒上供迴圈消費。
+    // 重新「合併 (Merge)」回目前列舉查詢結果的這條執行緒上供迴圈消費。
     // 這時候 WithMergeOptions 的設定就會決定它合併的緩衝策略。
     
     // 注意：如果是用 .ForAll()，結果會直接在各個 Worker 執行緒上被處理掉，
-    // 根本不存在合併回主執行緒的步驟，那 WithMergeOptions 就毫無意義了。
+    // 根本不存在合併回列舉端執行緒的步驟，那 WithMergeOptions 就毫無意義了。
     
     foreach (var result in query)
     {
