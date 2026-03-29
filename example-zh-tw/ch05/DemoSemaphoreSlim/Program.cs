@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 // 限制最多只能有 3 個操作同時進入這段非同步工作
-SemaphoreSlim _semaphore = new SemaphoreSlim(3);
+SemaphoreSlim _semaphore = new SemaphoreSlim(3, 3);
 
 var tasks = new List<Task>();
 for (int i = 1; i <= 10; i++)

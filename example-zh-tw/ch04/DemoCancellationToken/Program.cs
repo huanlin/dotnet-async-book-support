@@ -50,7 +50,8 @@ static async Task DoSomeLongRunningWorkAsync(CancellationToken token)
     }
     catch (OperationCanceledException)
     {
-        // 當 token 被取消時，ThrowIfCancellationRequested 或 Delay 會拋出此例外
+        // ThrowIfCancellationRequested 會拋出 OperationCanceledException，
+        // 而像 Task.Delay 這類 API 常會拋出其衍生型別 TaskCanceledException
         Console.WriteLine("背景工作已被取消。");
         throw; // 通常需要往上拋出
     }

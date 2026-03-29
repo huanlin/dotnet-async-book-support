@@ -14,7 +14,9 @@ public static class TimerExtensions
 {
     public static Task WaitAsync(this System.Timers.Timer timer)
     {
-        var tcs = new TaskCompletionSource();
+        // 避免在計時器回呼路徑上同步執行 await 後續的 continuation。
+        var tcs = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously);
         timer.Elapsed += OnElapsed;
         timer.AutoReset = false;
         timer.Enabled = true;

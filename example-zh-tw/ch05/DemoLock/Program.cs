@@ -30,5 +30,14 @@ public class ThreadSafeCounter
         }
     }
 
-    public int Value => _count;
+    public int Value
+    {
+        get
+        {
+            lock (_lock)
+            {
+                return _count;
+            }
+        }
+    }
 }
