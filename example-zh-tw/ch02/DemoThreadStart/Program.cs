@@ -13,7 +13,7 @@ void DoWork()
 {
     var msg = $"工作執行緒 ID: {Environment.CurrentManagedThreadId}";
     Console.WriteLine(msg);
-    Console.WriteLine("背景工作正在進行中...");
+    Console.WriteLine("工作正在進行中...");
     Thread.Sleep(2000); // 模擬耗時 2 秒的工作
-    Console.WriteLine("背景工作完成。");
+    Console.WriteLine("工作完成。");
 }

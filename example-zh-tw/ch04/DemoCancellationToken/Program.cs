@@ -27,6 +27,11 @@ catch (OperationCanceledException)
     // 這是預期的
     Console.WriteLine("呼叫端捕獲 OperationCanceledException。");
 }
+catch (Exception ex)
+{
+    // 這才是真正的錯誤
+    Console.WriteLine($"工作發生異常：{ex.Message}");
+}
 
 static async Task DoSomeLongRunningWorkAsync(CancellationToken token)
 {

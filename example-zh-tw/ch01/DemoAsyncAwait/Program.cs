@@ -22,18 +22,18 @@ async Task MakePizzaAsync(int id)
     // 獲取目前執行緒的 ID，觀察非同步的執行緒變化
     int threadId = Environment.CurrentManagedThreadId;
     Console.WriteLine($"[廚師 {threadId}] 開始處理第 {id} 份披薩，先等待麵糰醒發...");
-    
+
     // 模擬一段可非同步等待的前置時間，例如等待麵糰醒發或配料送達：不阻塞執行緒
-    await Task.Delay(500); 
-    
+    await Task.Delay(500);
+
     threadId = Environment.CurrentManagedThreadId;
     Console.WriteLine($"[廚師 {threadId}] 麵糰準備好了，將第 {id} 份披薩送入烤箱，設定計時器後即去處理其他事情！");
-    
-    // 模擬如網路連線、讀寫檔案這類需要等待外部回應的耗時操作（即 I/O 密集型操作），例如此處的烤箱烘烤
-    // 關鍵點：執行緒在這裡被「完全釋放」了，它不會被阻塞
-    // 系統可以將該執行緒派去處理其他任務，直到烤箱時間到了再透過系統的排程繼續執行下一行程式
-    await Task.Delay(2000); 
-    
+
+    // 模擬需要等待外部回應的耗時操作：烤箱烘烤。
+    // await 期間，執行緒不會被阻塞，系統可以將該執行緒派去處理
+    // 其他任務，直到烤箱時間到了再由系統安排繼續執行下一行程式。
+    await Task.Delay(2000);
+
     threadId = Environment.CurrentManagedThreadId;
     Console.WriteLine($"[廚師 {threadId}] 「叮！」第 {id} 份披薩烤好了，廚師回來取出披薩。");
 }
