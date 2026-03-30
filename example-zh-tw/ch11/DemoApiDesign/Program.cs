@@ -10,7 +10,7 @@ var sw = Stopwatch.StartNew();
 Console.WriteLine(await api.GetDataAsync(1));
 Console.WriteLine($"第一次呼叫耗時: {sw.ElapsedMilliseconds} ms");
 
-// 第二次呼叫 (快取命中，使用 ValueTask 同步返回，不配置 Task)
+// 第二次呼叫 (快取命中，使用 ValueTask 同步返回，避免額外配置新的 Task)
 sw.Restart();
 Console.WriteLine(await api.GetDataAsync(1));
 Console.WriteLine($"第二次呼叫耗時 (從快取): {sw.ElapsedMilliseconds} ms");
@@ -47,7 +47,7 @@ public class GoodApiDesignService
     private static readonly HttpClient httpClient = new HttpClient();
     private readonly Dictionary<int, string> _cache = new();
 
-    // 1. 使用 ValueTask 結合快取避免 Task 的 GC 配置壓力
+    // 1. 使用 ValueTask 結合快取，讓命中快取時可避免額外配置新的 Task
     // 2. 遵守 Async 結尾命名慣例
     // 3. 正確傳遞 CancellationToken (預設值為 default)
     public ValueTask<string> GetDataAsync(int id, CancellationToken cancellationToken = default)

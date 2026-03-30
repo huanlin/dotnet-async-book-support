@@ -1,4 +1,4 @@
-Console.WriteLine("示範第 7 章：使用 ParallelLoopState 控制平行迴圈");
+Console.WriteLine("示範：使用 ParallelLoopState 控制平行迴圈");
 
 Console.WriteLine("\n--- 展示一：使用 Stop() 要求盡快停止尚未開始的迭代 ---");
 RunParallelLoopWithStop();
@@ -23,7 +23,7 @@ void RunParallelLoopWithStop()
         Console.WriteLine($"[執行緒 {Environment.CurrentManagedThreadId}] 已完成處理第 {i} 筆");
     });
 
-    Console.WriteLine($"迴圈已完成? {result.IsCompleted}");
+    Console.WriteLine($"迴圈是否已完成? {result.IsCompleted}");
     if (!result.IsCompleted)
     {
         Console.WriteLine($"注意: Stop() 被呼叫，LowestBreakIteration 永遠會是 null: {result.LowestBreakIteration == null}");
@@ -47,7 +47,7 @@ void RunParallelLoopWithBreak()
         Console.WriteLine($"[執行緒 {Environment.CurrentManagedThreadId}] 已完成處理第 {i} 筆");
     });
 
-    Console.WriteLine($"迴圈已完成? {result.IsCompleted}");
+    Console.WriteLine($"迴圈是否已完成? {result.IsCompleted}");
     if (!result.IsCompleted)
     {
         Console.WriteLine($"迴圈被 Break 中斷，最早發起中斷的迭代索引是: {result.LowestBreakIteration}");

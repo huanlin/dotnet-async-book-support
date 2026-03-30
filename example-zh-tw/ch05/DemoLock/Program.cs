@@ -1,4 +1,4 @@
-﻿// 示範使用 lock 保護共享計數器，避免競態條件（race condition）
+// 示範使用 lock 保護共享計數器，避免競爭狀況（race condition）
 
 var counter = new ThreadSafeCounter();
 

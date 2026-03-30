@@ -1,4 +1,4 @@
-Console.WriteLine("示範第 7 章：使用 ParallelOptions 控制平行迴圈");
+Console.WriteLine("示範：使用 ParallelOptions 控制平行迴圈");
 RunParallelLoopWithOptions();
 
 void RunParallelLoopWithOptions()

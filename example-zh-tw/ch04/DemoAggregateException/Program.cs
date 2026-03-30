@@ -8,7 +8,7 @@ using var httpClient = new HttpClient();
 
 Console.WriteLine("示範 Task.Wait() 拋出 AggregateException");
 
-var faultyTask = DownloadPageAsync("https://this-url-does-not-exist.com");
+var faultyTask = DownloadPageAsync("https://this-host-does-not-exist.invalid");
 
 try
 {

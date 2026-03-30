@@ -2,10 +2,11 @@ Console.WriteLine("示範 timeout 與 cancellation 語意");
 
 var service = new OperationService();
 
-Console.WriteLine("\n--- 情境一：使用者主動取消 ---");
+Console.WriteLine("\n--- 情境一：使用者主動取消（模擬使用者點擊取消按鈕）---");
 using (var userCts = new CancellationTokenSource())
 {
-    userCts.CancelAfter(450);
+    // 模擬使用者在 450ms 後點擊「取消」按鈕
+    _ = Task.Delay(450).ContinueWith(_ => userCts.Cancel());
 
     try
     {

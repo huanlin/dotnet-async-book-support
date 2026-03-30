@@ -7,7 +7,8 @@ using var httpClient = new HttpClient();
 
 try
 {
-    string content = await DownloadPageAsync("https://this-url-does-not-exist.com");
+    string url = "https://this-host-does-not-exist.invalid";
+    string content = await DownloadPageAsync(url);
     Console.WriteLine("下載成功！");
 }
 catch (HttpRequestException ex)
@@ -15,9 +16,10 @@ catch (HttpRequestException ex)
     Console.WriteLine("發生網路錯誤：");
     Console.WriteLine(ex.Message);
 }
+
 async Task<string> DownloadPageAsync(string url)
 {
-    // HttpClient 會在找不到網址時拋出 HttpRequestException
+    // HttpClient 在要求失敗或無法解析主機名稱時，可能拋出 HttpRequestException
     string content = await httpClient.GetStringAsync(url);
     return content;
 }

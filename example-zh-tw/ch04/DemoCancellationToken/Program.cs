@@ -15,7 +15,7 @@ Task workTask = DoSomeLongRunningWorkAsync(token);
 await Task.Delay(2500);
 
 // 4. 在未來的某個時間點，當你決定要取消時...
-Console.WriteLine("\n[主執行緒] 使用者決定取消操作！");
+Console.WriteLine("\n[呼叫端] 使用者決定取消操作！");
 cts.Cancel(); // 按下「取消按鈕」
 
 try 
@@ -44,7 +44,8 @@ static async Task DoSomeLongRunningWorkAsync(CancellationToken token)
             token.ThrowIfCancellationRequested();
 
             Console.WriteLine($"正在執行第 {i + 1}/10 部分的工作...");
-            await Task.Delay(1000, token); // Delay 也會監聽 token
+            // 重要：將 token 繼續向下傳遞給任何支援的底層 API！
+            await Task.Delay(1000, token);
         }
         Console.WriteLine("背景工作順利完成。");
     }

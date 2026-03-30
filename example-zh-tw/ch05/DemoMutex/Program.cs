@@ -3,8 +3,12 @@ using System.Threading;
 
 Console.WriteLine("示範使用具名 Mutex 偵測是否已有另一個執行個體正在執行");
 
-// 建立一個有命名的 Mutex。名稱建議使用可跨平台辨識的唯一字串以避免衝突。
-using Mutex mutex = new Mutex(false, "com.example.myawesomeapp.single-instance.A1B2C3D4");
+// 建立一個具名的 Mutex。名稱建議使用可跨平台辨識的唯一字串以避免衝突。
+// 這裡使用 CurrentUserOnly，避免其他使用者的處理序干擾同名 Mutex。
+using Mutex mutex = new Mutex(
+    false,
+    "com.example.myawesomeapp.single-instance.A1B2C3D4",
+    new NamedWaitHandleOptions { CurrentUserOnly = true });
 
 // 嘗試獲取鎖，等待 0 毫秒（立即回傳結果）
 try

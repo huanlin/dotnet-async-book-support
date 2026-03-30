@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-// 使用 HttpClient 時，宣告為單一實例且可重複使用，避免 Socket 耗盡
+// 這個範例在整個程式執行期間只建立一次 HttpClient，避免短時間內頻繁建立與銷毀
 using var httpClient = new HttpClient();
 
 Console.WriteLine("示範 HttpClient 的 ResponseHeadersRead 與串流處理");
@@ -15,7 +15,8 @@ Console.WriteLine($"預計儲存位置: {tempFilePath}");
 try
 {
     var sw = Stopwatch.StartNew();
-    await DownloadLargeFileAsync(url, tempFilePath);
+    using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+    await DownloadLargeFileAsync(url, tempFilePath, cancellationSource.Token);
     sw.Stop();
     
     // 檢查檔案大小
@@ -35,12 +36,19 @@ finally
         Console.WriteLine("暫存檔已刪除。");
     }
 }
-async Task DownloadLargeFileAsync(string fileUrl, string destinationPath)
+async Task DownloadLargeFileAsync(
+    string fileUrl,
+    string destinationPath,
+    CancellationToken cancellationToken = default)
 {
     // 關鍵參數：HttpCompletionOption.ResponseHeadersRead
-    // 指示 HttpClient 只要讀到 HTTP Headers 就立刻返回，不要把整個 Body 讀進記憶體
+    // 指示 HttpClient 只要讀到 HTTP Headers 就立刻返回，不要把整個 Body 讀進記憶體。
+    // 後續 Body 的讀取則改由 CancellationToken 來控制取消或逾時。
     Console.WriteLine("發送 HTTP 要求，等待 Headers 回傳...");
-    using var response = await httpClient.GetAsync(fileUrl, HttpCompletionOption.ResponseHeadersRead);
+    using var response = await httpClient.GetAsync(
+        fileUrl,
+        HttpCompletionOption.ResponseHeadersRead,
+        cancellationToken);
     
     // 確保 HTTP 狀態碼是 2xx 成功
     response.EnsureSuccessStatusCode();
@@ -55,7 +63,7 @@ async Task DownloadLargeFileAsync(string fileUrl, string destinationPath)
     Console.WriteLine("開始從網路流讀取資料，並持續寫入磁碟 (背壓控制與串流化處理)...");
     
     // 從 Response 中取得即時的非同步資料流
-    using var networkStream = await response.Content.ReadAsStreamAsync();
+    using var networkStream = await response.Content.ReadAsStreamAsync(cancellationToken);
     
     // 建立本地端的檔案流
     // 關鍵點：明確設定 useAsync: true，要求底層盡量採用非同步 I/O 路徑
@@ -71,5 +79,5 @@ async Task DownloadLargeFileAsync(string fileUrl, string destinationPath)
     // 當從網路讀取填滿緩衝區時，會將資料寫入磁碟。
     // 在寫入磁碟期間（如果磁碟較慢），網路讀取的動作會被暫停（背壓 backpressure），
     // 這確保了記憶體使用量不會因為網路快、磁碟慢而暴增。
-    await networkStream.CopyToAsync(fileStream);
+    await networkStream.CopyToAsync(fileStream, 81920, cancellationToken);
 }
