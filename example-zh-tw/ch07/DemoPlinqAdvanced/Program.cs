@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-Console.WriteLine("示範第 7 章：PLINQ 的進階控制與合併選項");
+Console.WriteLine("示範：PLINQ 的進階控制與合併選項");
 
 List<int> numbers = Enumerable.Range(1, 20).ToList();
 
@@ -29,8 +29,9 @@ void RunPlinqWithMergeOption(List<int> source, ParallelMergeOptions option)
                       {
                           int result = ComputeExpensiveSquare(x);
 
-                          // 這行輸出是為了觀察資料何時被交還給呼叫端；實務上應避免在查詢中加入副作用。
-                          Console.Write($"[產出 {result}] ");
+                          // 這行輸出只是為了示範「工作執行緒何時算出結果」，
+                          // 並不代表結果已經 merge 回列舉端；實務上應避免在查詢中加入副作用。
+                          Console.Write($"[工作執行緒產出 {result}] ");
                           return result;
                       });
 
@@ -44,7 +45,7 @@ void RunPlinqWithMergeOption(List<int> source, ParallelMergeOptions option)
     
     foreach (var result in query)
     {
-        Console.Write($"{result} ");
+        Console.Write($"[列舉端收到 {result}] ");
     }
     
     Console.WriteLine($"\n總耗時: {sw.ElapsedMilliseconds} ms");

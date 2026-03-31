@@ -2,8 +2,8 @@ using System.Diagnostics;
 
 Console.WriteLine("示範 FileStream 非同步讀寫與 Backpressure (背壓) 概念");
 
-string sourcePath = Path.GetTempFileName();
-string destinationPath = Path.GetTempFileName();
+string sourcePath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+string destinationPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 
 try
 {
@@ -61,7 +61,7 @@ async Task CopyFileWithAsyncStream(string source, string dest)
 
     // 關鍵點三：CopyToAsync 提供的背壓 (Backpressure) 控制
     // 它不會一次把 500MB 全讀進 RAM，而是使用固定大小的 buffer (例如 81920 bytes)。
-    // 讀滿 buffer -> 暫停讀取 -> 觸發寫入硬碟 -> 等待寫入完成 -> 繼續讀取網路/來源。
+    // 讀滿 buffer -> 暫停讀取 -> 觸發寫入硬碟 -> 等待寫入完成 -> 繼續讀取來源。
     // 這讓程式的記憶體使用量大致維持在固定緩衝區的量級，不會隨檔案大小線性成長。
     
     // 我們也可以傳入自己定義的 buffer size 給 CopyToAsync

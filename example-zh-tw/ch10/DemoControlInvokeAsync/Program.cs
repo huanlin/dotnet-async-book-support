@@ -77,15 +77,16 @@ sealed class MainForm : Form
             // 這裡刻意用 Task.Run 來模擬「我們已經在背景執行緒上」的情境。
             await Task.Run(async () =>
             {
-                int workerThreadId = Environment.CurrentManagedThreadId;
+                int startingWorkerThreadId = Environment.CurrentManagedThreadId;
                 await this.InvokeAsync(() =>
-                    Log($"背景執行緒 {workerThreadId}：背景工作開始，先做一些非 UI 工作..."));
+                    Log($"背景工作起始於 Thread Pool 執行緒 {startingWorkerThreadId}，先做一些非 UI 工作..."));
 
                 await Task.Delay(1500);
-                string status = $"背景工作完成，來源執行緒：{workerThreadId}";
+                int currentWorkerThreadId = Environment.CurrentManagedThreadId;
+                string status = $"背景工作完成，目前背景執行緒：{currentWorkerThreadId}";
 
                 await this.InvokeAsync(() =>
-                    Log($"背景執行緒 {workerThreadId}：準備呼叫 InvokeAsync，封送回 UI 執行緒。"));
+                    Log($"背景工作準備呼叫 InvokeAsync。起始執行緒：{startingWorkerThreadId}，目前執行緒：{currentWorkerThreadId}。"));
 
                 await this.InvokeAsync(() =>
                 {
@@ -99,8 +100,9 @@ sealed class MainForm : Form
                     }
                 });
 
+                int afterInvokeThreadId = Environment.CurrentManagedThreadId;
                 await this.InvokeAsync(() =>
-                    Log($"背景執行緒 {workerThreadId}：InvokeAsync 已完成，背景工作可以安全繼續。"));
+                    Log($"InvokeAsync 已完成，控制權回到背景流程。目前背景執行緒：{afterInvokeThreadId}。"));
             });
 
             Log("外層 await 已完成，表示 UI 更新也已經完成。");

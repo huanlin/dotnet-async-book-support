@@ -5,8 +5,8 @@ using var httpClient = new HttpClient();
 
 Console.WriteLine("示範 HttpClient 的 ResponseHeadersRead 與串流處理");
 
-// 目標：下載一個大型檔案（這裡使用公開可用的 100 MB 測試檔案）
-string url = "https://proof.ovh.net/files/100Mb.dat";
+// 目標：下載一個較大的檔案（這裡使用公開可用的 10 MB 測試檔案，較不易受網路波動影響）
+string url = "https://proof.ovh.net/files/10Mb.dat";
 string tempFilePath = Path.GetTempFileName();
 
 Console.WriteLine($"準備下載檔案: {url}");
@@ -15,13 +15,17 @@ Console.WriteLine($"預計儲存位置: {tempFilePath}");
 try
 {
     var sw = Stopwatch.StartNew();
-    using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+    using var cancellationSource = new CancellationTokenSource(TimeSpan.FromMinutes(2));
     await DownloadLargeFileAsync(url, tempFilePath, cancellationSource.Token);
     sw.Stop();
     
     // 檢查檔案大小
     var fileInfo = new FileInfo(tempFilePath);
     Console.WriteLine($"\n✅ 下載完成！耗時: {sw.ElapsedMilliseconds} ms, 檔案大小: {fileInfo.Length / 1024 / 1024} MB");
+}
+catch (OperationCanceledException)
+{
+    Console.WriteLine("❌ 下載逾時或被取消。若網路較慢，可調整 CancellationTokenSource 的時間。");
 }
 catch (Exception ex)
 {
