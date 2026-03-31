@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 int counter = 0;
 
-// 啟動兩個 Task，同時對 counter 進行遞增
+// 啟動兩個 Task，併發地對 counter 進行遞增
 Task task1 = Task.Run(() =>
 {
     for (int i = 0; i < 1_000_000; i++)
