@@ -11,13 +11,23 @@ Console.WriteLine($"當前系統核心數: {Environment.ProcessorCount}\n");
 // 準備 8 個虛擬檔案
 var files = Enumerable.Range(1, 8).Select(i => $"File_{i}.txt").ToList();
 
-// 1. 循序處理
-ProcessFilesSequentially(files);
+RunSequentialDemo(files);
 
 Console.WriteLine();
 
-// 2. 平行處理
-ProcessFilesParallel(files);
+RunParallelDemo(files);
+
+static void RunSequentialDemo(IReadOnlyList<string> files)
+{
+    Console.WriteLine("=== 循序版本 ===");
+    ProcessFilesSequentially(files);
+}
+
+static void RunParallelDemo(IReadOnlyList<string> files)
+{
+    Console.WriteLine("=== 平行版本 ===");
+    ProcessFilesParallel(files);
+}
 
 static void ProcessFilesSequentially(IEnumerable<string> files)
 {
@@ -35,10 +45,7 @@ static void ProcessFilesParallel(IEnumerable<string> files)
 {
     Console.WriteLine("開始平行處理檔案...");
     var sw = Stopwatch.StartNew();
-    Parallel.ForEach(files, file =>
-    {
-        ProcessSingleFile(file);
-    });
+    Parallel.ForEach(files, file => ProcessSingleFile(file));
     sw.Stop();
     Console.WriteLine($"平行處理完成，耗時: {sw.ElapsedMilliseconds} ms");
 }
