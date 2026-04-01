@@ -37,13 +37,20 @@ try
 catch (AbandonedMutexException)
 {
     // 防禦性處理：如果上一個持有此 Mutex 的執行緒異常結束，
-    // 而具名 Mutex 物件仍存在並且目前這個執行個體是下一個等待者，
-    // WaitOne 就可能拋出 AbandonedMutexException。
-    // 收到這個例外代表目前已取得 Mutex，
-    // 但先前持有者可能在共享狀態尚未清理完成時就異常結束。
+    // 而此時仍有其他等待者或既有 handle 讓該具名 Mutex 物件持續存在，
+    // 下一個成功 WaitOne 的等待者就可能收到 AbandonedMutexException。
+    // 收到這個例外代表目前這個執行個體已取得 Mutex，
+    // 但不代表被保護的共享狀態一定安全或一致。
     Console.WriteLine("偵測到上一次應用程式未正常關閉 (Mutex 被遺棄)。");
-    
-    Console.WriteLine("應用程式啟動成功，按 Enter 鍵離開...");
-    Console.ReadLine();
-    mutex.ReleaseMutex();
+
+    // ... 在這裡可以執行狀態驗證或修復邏輯 ...
+    try
+    {
+        Console.WriteLine("應用程式啟動成功，按 Enter 鍵離開...");
+        Console.ReadLine();
+    }
+    finally
+    {
+        mutex.ReleaseMutex();
+    }
 }
