@@ -17,7 +17,7 @@ Console.WriteLine($"總耗時: {sw.ElapsedMilliseconds} ms");
 // ✓ 正確示範：併發執行，效率高
 async Task ConcurrentDownloadAsync()
 {
-    // 1. 啟動所有工作
+    // 1. 啟動所有工作（此處以相同 URL 發出三次請求，僅為示範併發效果）
     Task<string> task1 = httpClient.GetStringAsync("https://ippobooks.com/");
     Task<string> task2 = httpClient.GetStringAsync("https://ippobooks.com/");
     Task<string> task3 = httpClient.GetStringAsync("https://ippobooks.com/");

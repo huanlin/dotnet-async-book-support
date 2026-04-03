@@ -21,15 +21,15 @@ try
     
     // 檢查檔案大小
     var fileInfo = new FileInfo(tempFilePath);
-    Console.WriteLine($"\n✅ 下載完成！耗時: {sw.ElapsedMilliseconds} ms, 檔案大小: {fileInfo.Length / 1024 / 1024} MB");
+    Console.WriteLine($"\n下載完成！耗時: {sw.ElapsedMilliseconds} ms, 檔案大小: {fileInfo.Length / 1024 / 1024} MB");
 }
 catch (OperationCanceledException)
 {
-    Console.WriteLine("❌ 下載逾時或被取消。若網路較慢，可調整 CancellationTokenSource 的時間。");
+    Console.WriteLine("失敗：下載逾時或被取消。若網路較慢，可調整 CancellationTokenSource 的時間。");
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"❌ 發生錯誤: {ex.Message}");
+    Console.WriteLine($"發生錯誤: {ex.Message}");
 }
 finally
 {
@@ -40,13 +40,14 @@ finally
         Console.WriteLine("暫存檔已刪除。");
     }
 }
+
 async Task DownloadLargeFileAsync(
     string fileUrl,
     string destinationPath,
     CancellationToken cancellationToken = default)
 {
     // 關鍵參數：HttpCompletionOption.ResponseHeadersRead
-    // 指示 HttpClient 只要讀到 HTTP Headers 就立刻返回，不要把整個 Body 讀進記憶體。
+    // 指示 HttpClient 只要讀到 HTTP Headers 就立刻返回。
     // 後續 Body 的讀取則改由 CancellationToken 來控制取消或逾時。
     Console.WriteLine("發送 HTTP 要求，等待 Headers 回傳...");
     using var response = await httpClient.GetAsync(

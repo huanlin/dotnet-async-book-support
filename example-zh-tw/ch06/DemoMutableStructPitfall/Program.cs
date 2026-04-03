@@ -1,4 +1,4 @@
-Console.WriteLine("示範第 6 章：可變 struct 的陷阱 (靜默失敗)");
+Console.WriteLine("示範可變 struct 的陷阱 (靜默失敗)");
 
 // 1. 正常的陣列行為 (成功修改)
 MutablePoint[] points = new MutablePoint[1];
@@ -14,8 +14,12 @@ List<MutablePoint> list = new List<MutablePoint>
     new MutablePoint { X = 10, Y = 20 }
 };
 
-// 重點：list[0] 會回傳該結構的一個「暫時副本 (Copy)」
-// 呼叫 Move(5, 5) 實際上只修改了那個副本，並不會寫回 List 內部的元素
+// 直接修改欄位會被編譯器擋下（CS1612）：
+// list[0].X = 10; // 錯誤 CS1612: 無法修改 'List<MutablePoint>.this[int]' 的傳回值，因為它不是變數
+
+// 真正危險的地方：呼叫會修改內部狀態的方法，編譯器不會報錯。
+// list[0] 會回傳該結構的一個「暫時副本 (Copy)」，
+// Move(5, 5) 只修改了那個副本，並不會寫回 List 內部的元素。
 list[0].Move(5, 5);
 
 Console.WriteLine($"List 中的點：X={list[0].X}, Y={list[0].Y}");

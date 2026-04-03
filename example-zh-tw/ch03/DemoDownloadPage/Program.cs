@@ -13,6 +13,7 @@ Console.WriteLine($"網址 {url} 的字數是: {count}");
 
 async Task<int> DownloadPageAndCountCharsAsync(string url)
 {
+    // 1. 非同步地等待下載完成，期間不會阻塞執行緒
     string content = await httpClient.GetStringAsync(url);
     // 2. 下載完成後，程式碼會從這裡繼續執行
     return content.Length;

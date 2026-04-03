@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-Console.WriteLine("示範第 6 章：ImmutableArray<T> 的 default 值陷阱");
+Console.WriteLine("示範 ImmutableArray<T> 的 default 值陷阱");
 
 ImmutableArray<int> items = default;
 

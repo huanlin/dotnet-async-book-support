@@ -32,7 +32,7 @@ thread.Start();
 if (!thread.Join(1500))
 {
     Console.WriteLine("偵測到工作執行緒超時未完成。");
-    Console.WriteLine("這通常表示 `.Result` 卡住了目前執行緒，而 continuation 又想切回同一個 SynchronizationContext。");
+    Console.WriteLine("這通常表示 .Result 卡住了目前執行緒，而 continuation 又想切回同一個 SynchronizationContext。");
     Console.WriteLine("這正是 Sync-over-Async 在 UI / 單執行緒環境中容易引發死鎖的原因。");
 }
 else if (capturedException is not null)
@@ -67,6 +67,6 @@ public sealed class QueuedSynchronizationContext : SynchronizationContext
     public override void Post(SendOrPostCallback d, object? state)
     {
         _queue.Add((d, state));
-        Console.WriteLine("[SyncContext] continuation 已被排入佇列，但目前執行緒正被 `.Result` 卡住。");
+        Console.WriteLine("[SyncContext] continuation 已被排入佇列，但目前執行緒正被 .Result 卡住。");
     }
 }

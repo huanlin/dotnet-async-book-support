@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 // 1. 建立 CancellationTokenSource
-var cts = new CancellationTokenSource();
+using var cts = new CancellationTokenSource();
 
 // 2. 從 CTS 取得 CancellationToken
 var token = cts.Token;

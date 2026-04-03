@@ -17,7 +17,7 @@ try
     await CopyFileWithAsyncStream(sourcePath, destinationPath);
     
     sw.Stop();
-    Console.WriteLine($"\n✅ 複製完成！耗時: {sw.ElapsedMilliseconds} ms");
+    Console.WriteLine($"\n複製完成！耗時: {sw.ElapsedMilliseconds} ms");
 }
 finally
 {

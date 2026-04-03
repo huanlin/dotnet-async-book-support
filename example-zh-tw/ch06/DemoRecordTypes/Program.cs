@@ -1,4 +1,4 @@
-Console.WriteLine("示範第 6 章：不可變的 record 型別與 with 運算式");
+Console.WriteLine("示範不可變的 record 型別與 with 運算式");
 
 // 1. 初始化一個 record 實體
 var alice = new Person("Alice", 30);
@@ -25,5 +25,6 @@ Console.WriteLine($"新版本: {olderAlice}");
 // 1. Name 和 Age 兩個 init-only 屬性
 // 2. 覆寫 Equals 和 GetHashCode 實現「值相等性」
 // 3. 提供漂亮的 ToString() 實作
-// 4. 支援 with 運算式所需的複製語意與解構 (Deconstruct) 語法
+// 4. 支援 with 運算式（非破壞性修改）所需的複製語意
+// 5. 提供 Deconstruct 方法，支援 var (name, age) = person 解構語法
 public record Person(string Name, int Age);
