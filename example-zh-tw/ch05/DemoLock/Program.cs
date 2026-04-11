@@ -33,7 +33,7 @@ public class ThreadSafeCounter
     public int Value
     {
         get
-        {
+        {   // 此範例的 getter 不一定非得上鎖
             lock (_lock)
             {
                 return _count;
