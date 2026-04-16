@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="DemoAsyncOverSync\DemoAsyncOverSync.csproj" />
+  <Project Path="DemoAsyncDisposablePattern\DemoAsyncDisposablePattern.csproj" />
+  <Project Path="DemoAsyncParameterValidation\DemoAsyncParameterValidation.csproj" />
+  <Project Path="DemoSyncOverAsync\DemoSyncOverAsync.csproj" />
+  <Project Path="DemoTimeoutCancellation\DemoTimeoutCancellation.csproj" />
+  <Project Path="DemoValueTaskApiDesign\DemoValueTaskApiDesign.csproj" />
+</Solution>

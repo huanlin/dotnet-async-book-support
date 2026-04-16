@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="DemoDownloadPage/DemoDownloadPage.csproj" />
+  <Project Path="DemoTaskWhenAll/DemoTaskWhenAll.csproj" />
+  <Project Path="DemoTaskWhenAny/DemoTaskWhenAny.csproj" />
+  <Project Path="DemoTaskWhenEach/DemoTaskWhenEach.csproj" />
+</Solution>

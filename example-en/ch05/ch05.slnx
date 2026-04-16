@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="DemoRaceCondition/DemoRaceCondition.csproj" />
+  <Project Path="DemoInterlocked/DemoInterlocked.csproj" />
+  <Project Path="DemoLock/DemoLock.csproj" />
+  <Project Path="DemoLockNet9Plus/DemoLockNet9Plus.csproj" />
+  <Project Path="DemoSemaphoreSlim/DemoSemaphoreSlim.csproj" />
+  <Project Path="DemoMutex/DemoMutex.csproj" />
+</Solution>

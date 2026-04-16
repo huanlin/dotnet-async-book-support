@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="DemoTaskCompletionSource/DemoTaskCompletionSource.csproj" />
+  <Project Path="DemoTaskCompletionSourceCompletionPaths/DemoTaskCompletionSourceCompletionPaths.csproj" />
+  <Project Path="DemoExecutionContextFlow/DemoExecutionContextFlow.csproj" />
+  <Project Path="DemoValueTask/DemoValueTask.csproj" />
+  <Project Path="DemoTaskYield/DemoTaskYield.csproj" />
+  <Project Path="DemoStarvation/DemoStarvation.csproj" />
+</Solution>
