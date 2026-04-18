@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="DemoAspNetCoreConcurrency\DemoAspNetCoreConcurrency.csproj" />
   <Project Path="DemoAsyncMvvmWpf\DemoAsyncMvvmWpf.csproj" />
   <Project Path="DemoControlInvokeAsync\DemoControlInvokeAsync.csproj" />
   <Project Path="DemoHttpClient\DemoHttpClient.csproj" />
