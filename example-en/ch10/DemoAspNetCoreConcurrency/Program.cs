@@ -24,7 +24,7 @@ app.MapGet(
         The concurrent endpoint starts both I/O operations first and then awaits Task.WhenAll.
         The sequential endpoint awaits each operation one by one.
         """,
-        "text/plain"));
+        "text/plain; charset=utf-8"));
 
 app.MapControllers();
 app.Run();

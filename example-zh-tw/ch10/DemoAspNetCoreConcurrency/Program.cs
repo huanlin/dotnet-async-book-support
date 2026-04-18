@@ -24,7 +24,7 @@ app.MapGet(
         concurrent 端點會先同時啟動兩個 I/O，再用 Task.WhenAll 等待。
         sequential 端點則是逐一 await。
         """,
-        "text/plain"));
+        "text/plain; charset=utf-8"));
 
 app.MapControllers();
 app.Run();
