@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="DemoExceptionHandling/DemoExceptionHandling.csproj" />
+  <Project Path="DemoAggregateException/DemoAggregateException.csproj" />
+  <Project Path="DemoCancellationToken/DemoCancellationToken.csproj" />
+  <Project Path="DemoTimeouts/DemoTimeouts.csproj" />
+  <Project Path="DemoTimeProviderTest/DemoTimeProviderTest.csproj" />
+</Solution>

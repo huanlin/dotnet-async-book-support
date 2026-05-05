@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="DemoSingleThread\DemoSingleThread.csproj" />
+  <Project Path="DemoMultiThread\DemoMultiThread.csproj" />
+  <Project Path="DemoAsyncAwait\DemoAsyncAwait.csproj" />
+</Solution>

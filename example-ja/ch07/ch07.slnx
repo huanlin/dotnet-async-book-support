@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="DemoParallelLoopState\DemoParallelLoopState.csproj" />
+  <Project Path="DemoParallelOptions\DemoParallelOptions.csproj" />
+  <Project Path="DemoPlinqAdvanced\DemoPlinqAdvanced.csproj" />
+  <Project Path="DemoParallelForEach\DemoParallelForEach.csproj" />
+</Solution>
